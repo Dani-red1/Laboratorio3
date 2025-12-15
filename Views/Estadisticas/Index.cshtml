@@ -1,0 +1,61 @@
+﻿@model EstadisticasViewModel
+
+<h1>Estadísticas</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Resumen Financiero</h3>
+        <ul>
+            <li>
+                <strong>Promedio de Precios:</strong>
+                @Model.PromedioPrecios.ToString("C")
+            </li>
+            <li>
+                <strong>Valor Total del Inventario:</strong>
+                @Model.ValorTotalInventario.ToString("C")
+            </li>
+        </ul>
+    </div>
+</div>
+
+<hr />
+
+<h2>10 Productos Más Caros</h2>
+<table class="table">
+    <thead>
+        <tr><th>Nombre</th><th>Precio</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProductosMasCaros)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Precio.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Stock Crítico (Menos de 5 unidades)</h2>
+<table class="table table-danger">
+    <thead>
+        <tr><th>Nombre</th><th>Stock Actual</th></tr>
+    </thead>
+    <tbody>
+        @if (Model.StockCritico.Any())
+        {
+            @foreach (var item in Model.StockCritico)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Stock</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="2">No hay productos en stock crítico.</td></tr>
+        }
+    </tbody>
+</table>
