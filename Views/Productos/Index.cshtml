@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Producto>
+
+<h1>Inventario de Productos Techsolutions</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Producto</a>
+</p>
+
+<form asp-controller="Productos" asp-action="Index" method="get">
+    <p>
+        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"
+               placeholder="Buscar por nombre..." style="width: 300px;" />
+        <input type="submit" value="Buscar" class="btn btn-info" />
+        <a asp-action="Index" class="btn btn-secondary">Mostrar Todos</a>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Precio)</th>
+            <th>@Html.DisplayNameFor(model => model.Stock)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@item.Precio.ToString("C")</td>
+                <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
